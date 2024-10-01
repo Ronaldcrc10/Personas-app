@@ -9,51 +9,110 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <title>Listado de Comunas</title>
+
+    <style>
+        body {
+            background-color: #f4f6f9;
+        }
+        .container {
+            margin-top: 50px;
+            max-width: 900px;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+        .btn-success {
+            margin-bottom: 20px;
+            background-color: #28a745;
+            border-color: #28a745;
+            transition: background-color 0.3s ease;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #218838;
+        }
+        table {
+            background: #ffffff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        thead {
+            background-color: #343a40;
+            color: #fff;
+        }
+        th, td {
+            text-align: center;
+            vertical-align: middle;
+        }
+        .btn-info {
+            background-color: #17a2b8;
+            border-color: #17a2b8;
+            transition: background-color 0.3s ease;
+        }
+        .btn-info:hover {
+            background-color: #138496;
+            border-color: #117a8b;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            transition: background-color 0.3s ease;
+        }
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+    </style>
   </head>
   <body>
     <div class="container">
-        <h1>Listado de Comunas</h1>
-        <a href="{{ route('comunas.create') }}" class="btn btn-success">Add</a>
-        <table class="table">
-            <thead>
+        <h1 class="text-center">Listado de Comunas</h1>
+        
+        <!-- Botón para agregar nueva comuna -->
+        <a href="{{ route('comunas.create') }}" class="btn btn-success">Agregar Comuna</a>
+
+        <!-- Tabla de comunas -->
+        <table class="table table-hover">
+            <thead class="table-dark">
                 <tr>
-                    <th scope="col">Code</th>
+                    <th scope="col">Código</th>
                     <th scope="col">Comuna</th>
                     <th scope="col">Municipio</th>
                     <th scope="col">Acciones</th>
                 </tr>
             </thead>
-  <tbody>
-        @foreach ($comunas as $comuna)
-            <tr>
-                <th scope="row">{{ $comuna->comu_codi }}</th>
-                <td>{{ $comuna->comu_nomb }}</td>
-                <td>{{ $comuna->muni_nomb }}</td>
-                <td>
-                    <a href="{{ route('comunas.edit',['comuna' =>$comuna->comu_codi]) }}"
-                        class="btn btn-info">Edit</a>
-                    <form action="{{ route('comunas.destroy', ['comuna' => $comuna->comu_codi]) }}" method='POST' style="display: inline-block">
-                        @method('delete')
-                        @csrf
-                        <input class="btn btn-danger" type="submit" value="Delete">
-                    </form>
-                </td>
-            </tr>
-        @endforeach
-    </tbody>
+            <tbody>
+                @foreach ($comunas as $comuna)
+                    <tr>
+                        <th scope="row">{{ $comuna->comu_codi }}</th>
+                        <td>{{ $comuna->comu_nomb }}</td>
+                        <td>{{ $comuna->muni_nomb }}</td>
+                        <td>
+                            <!-- Botón para editar comuna -->
+                            <a href="{{ route('comunas.edit',['comuna' =>$comuna->comu_codi]) }}" class="btn btn-info">Editar</a>
+                            
+                            <!-- Botón para eliminar comuna -->
+                            <form action="{{ route('comunas.destroy', ['comuna' => $comuna->comu_codi]) }}" method='POST' style="display: inline-block">
+                                @method('delete')
+                                @csrf
+                                <input class="btn btn-danger" type="submit" value="Eliminar" onclick="return confirm('¿Estás seguro de que deseas eliminar esta comuna?')">
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
         </table>
     </div>
-    
 
-    <!-- Optional JavaScript; choose one of the two! -->
-
-    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-    -->
   </body>
 </html>
